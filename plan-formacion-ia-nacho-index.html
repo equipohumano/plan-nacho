@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plan de Formación IA · Nacho · LUCE IT</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f12; --bg2: #13161b; --bg3: #1a1e25;
+    --border: rgba(255,255,255,0.07); --border2: rgba(255,255,255,0.12);
+    --text: #e8eaf0; --muted: #7a8094;
+    --accent: #a78bfa;
+    --teal: #34d399; --blue: #4fa3f7; --gold: #f0c040;
+    --mod1: #4fa3f7; --mod2: #34d399; --mod3: #f59e0b; --mod4: #a78bfa;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-weight: 300; min-height: 100vh; overflow-x: hidden; }
+  body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E"); pointer-events: none; z-index: 0; }
+
+  .hero { position: relative; padding: 80px 48px 64px; border-bottom: 1px solid var(--border); overflow: hidden; }
+  .hero::after { content: ''; position: absolute; top: -120px; right: -80px; width: 500px; height: 500px; background: radial-gradient(circle, rgba(167,139,250,0.07) 0%, transparent 70%); pointer-events: none; }
+  .hero-eyebrow { display: flex; align-items: center; gap: 10px; margin-bottom: 28px; }
+  .logo-pill { display: flex; align-items: center; gap: 8px; background: var(--bg3); border: 1px solid var(--border2); border-radius: 100px; padding: 6px 14px 6px 8px; }
+  .logo-dot { width: 24px; height: 24px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+  .logo-dot svg { width: 12px; height: 12px; }
+  .logo-text { font-size: 12px; font-weight: 500; color: var(--muted); letter-spacing: 0.05em; text-transform: uppercase; }
+  .divider-dot { width: 4px; height: 4px; background: var(--border2); border-radius: 50%; }
+  .year-badge { font-size: 11px; color: var(--accent); font-weight: 500; letter-spacing: 0.08em; }
+  .hero h1 { font-family: 'DM Serif Display', serif; font-size: clamp(36px, 5vw, 64px); line-height: 1.05; color: var(--text); margin-bottom: 8px; font-weight: 400; }
+  .hero h1 em { font-style: italic; color: var(--accent); }
+  .hero-sub { font-size: 16px; color: var(--muted); margin-bottom: 40px; max-width: 560px; line-height: 1.6; font-weight: 300; }
+  .hero-stats { display: flex; gap: 0; flex-wrap: wrap; }
+  .stat { padding: 16px 28px; border: 1px solid var(--border); border-right: none; }
+  .stat:first-child { border-radius: 10px 0 0 10px; }
+  .stat:last-child { border-radius: 0 10px 10px 0; border-right: 1px solid var(--border); }
+  .stat-val { font-family: 'DM Serif Display', serif; font-size: 26px; color: var(--text); line-height: 1; margin-bottom: 4px; }
+  .stat-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+
+  .progress-section { padding: 24px 48px; background: var(--bg2); border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 24px; }
+  .progress-label { font-size: 12px; color: var(--muted); white-space: nowrap; text-transform: uppercase; letter-spacing: 0.05em; }
+  .progress-track { flex: 1; height: 3px; background: var(--border2); border-radius: 2px; }
+  .progress-fill { height: 100%; background: var(--accent); border-radius: 2px; width: 0%; transition: width 0.6s ease; }
+  .progress-pct { font-size: 13px; font-weight: 500; color: var(--accent); min-width: 36px; text-align: right; }
+
+  .main { display: grid; grid-template-columns: 280px 1fr; min-height: calc(100vh - 240px); }
+
+  .sidebar { border-right: 1px solid var(--border); padding: 32px 0; position: sticky; top: 0; height: calc(100vh - 240px); overflow-y: auto; }
+  .sidebar-title { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); padding: 0 24px 16px; }
+  .mod-nav { list-style: none; }
+  .mod-nav-btn { width: 100%; display: flex; align-items: center; gap: 12px; padding: 14px 24px; background: none; border: none; cursor: pointer; text-align: left; transition: background 0.15s; border-left: 2px solid transparent; color: var(--text); font-family: 'DM Sans', sans-serif; }
+  .mod-nav-btn:hover { background: var(--bg3); }
+  .mod-nav-btn.active { background: var(--bg3); border-left-color: var(--accent); }
+  .nav-num { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 500; flex-shrink: 0; border: 1px solid currentColor; opacity: 0.5; transition: opacity 0.2s; }
+  .mod-nav-btn.active .nav-num, .mod-nav-btn:hover .nav-num { opacity: 1; }
+  .nav-info { flex: 1; }
+  .nav-title { font-size: 13px; font-weight: 400; color: var(--text); line-height: 1.3; margin-bottom: 2px; }
+  .nav-weeks { font-size: 11px; color: var(--muted); }
+  .nav-check { width: 16px; height: 16px; border-radius: 50%; border: 1.5px solid var(--border2); flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+  .nav-check.done { background: var(--accent); border-color: var(--accent); }
+  .nav-check.done::after { content: ''; width: 6px; height: 4px; border-left: 1.5px solid #000; border-bottom: 1.5px solid #000; transform: rotate(-45deg) translateY(-1px); display: block; }
+  .sidebar-divider { height: 1px; background: var(--border); margin: 16px 24px; }
+  .sidebar-note { padding: 0 24px; }
+  .sidebar-note p { font-size: 12px; color: var(--muted); line-height: 1.6; }
+  .nav-progress { display: flex; align-items: center; gap: 5px; margin-top: 3px; }
+  .nav-mini-bar { width: 36px; height: 2px; background: var(--border2); border-radius: 2px; overflow: hidden; }
+  .nav-mini-fill { height: 100%; background: var(--teal); border-radius: 2px; width: 0%; transition: width 0.4s ease; }
+  .nav-mini-pct { font-size: 10px; color: var(--muted); }
+
+  .content { padding: 40px 48px; }
+  .module-panel { display: none; animation: fadeIn 0.3s ease; }
+  .module-panel.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  .module-header { display: flex; align-items: flex-start; gap: 20px; margin-bottom: 32px; padding-bottom: 32px; border-bottom: 1px solid var(--border); }
+  .module-icon { width: 56px; height: 56px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+  .module-header-text { flex: 1; }
+  .module-eyebrow { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; font-weight: 500; }
+  .module-title { font-family: 'DM Serif Display', serif; font-size: 28px; font-weight: 400; line-height: 1.15; margin-bottom: 10px; }
+  .module-desc { font-size: 14px; color: var(--muted); line-height: 1.6; max-width: 600px; }
+  .module-meta-pills { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+  .pill { font-size: 11px; padding: 4px 10px; border-radius: 100px; border: 1px solid var(--border2); color: var(--muted); font-weight: 400; }
+
+  .tiempo-box { display: inline-flex; align-items: center; gap: 10px; background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 12px 18px; margin-bottom: 32px; }
+  .tiempo-icon { font-size: 16px; opacity: 0.7; }
+  .tiempo-text { font-size: 12px; color: var(--muted); line-height: 1.4; }
+  .tiempo-text strong { color: var(--text); font-weight: 500; }
+
+  .section-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 16px; font-weight: 500; }
+  .obj-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-bottom: 40px; }
+  .obj-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 16px; display: flex; gap: 12px; align-items: flex-start; }
+  .obj-dot { width: 6px; height: 6px; border-radius: 50%; margin-top: 6px; flex-shrink: 0; }
+  .obj-text { font-size: 13px; color: var(--text); line-height: 1.5; }
+
+  .recursos-grid { display: flex; flex-direction: column; gap: 16px; margin-bottom: 40px; }
+  .recurso-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; transition: border-color 0.2s; }
+  .recurso-card:hover { border-color: var(--border2); }
+  .recurso-top { padding: 20px 24px 16px; display: flex; gap: 16px; align-items: flex-start; }
+  .recurso-type-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; background: var(--bg3); border: 1px solid var(--border); position: relative; }
+  .recurso-body { flex: 1; }
+  .recurso-title-row { display: flex; align-items: flex-start; gap: 10px; flex-wrap: wrap; margin-bottom: 6px; }
+  .recurso-name { font-size: 15px; font-weight: 500; color: var(--text); line-height: 1.3; }
+  .tag { font-size: 10px; padding: 3px 9px; border-radius: 100px; font-weight: 500; white-space: nowrap; flex-shrink: 0; margin-top: 2px; }
+  .tag-free    { background: rgba(52,211,153,0.12);  color: var(--teal);  border: 1px solid rgba(52,211,153,0.2); }
+  .tag-paid    { background: rgba(240,192,64,0.12);  color: var(--gold);  border: 1px solid rgba(240,192,64,0.2); }
+  .tag-reg     { background: rgba(79,163,247,0.12);  color: var(--blue);  border: 1px solid rgba(79,163,247,0.2); }
+  .tag-official{ background: rgba(167,139,250,0.12); color: var(--accent);border: 1px solid rgba(167,139,250,0.2); }
+  .recurso-short { font-size: 13px; color: var(--muted); line-height: 1.5; margin-bottom: 12px; }
+  .recurso-link-row { display: flex; align-items: center; gap: 8px; }
+  .recurso-link { font-size: 12px; color: var(--muted); text-decoration: none; word-break: break-all; }
+  .recurso-link:hover { color: var(--accent); }
+  .ext-icon { width: 14px; height: 14px; opacity: 0.4; flex-shrink: 0; }
+  .recurso-nota-box { padding: 14px 24px; background: var(--bg3); border-top: 1px solid var(--border); display: flex; gap: 10px; align-items: flex-start; }
+  .nota-icon { font-size: 13px; flex-shrink: 0; margin-top: 1px; opacity: 0.7; }
+  .nota-text { font-size: 12.5px; color: var(--muted); line-height: 1.6; font-style: italic; }
+
+  .recurso-done-row { padding: 10px 24px 14px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .mod-progress-mini { font-size: 11px; color: var(--muted); display: flex; align-items: center; gap: 6px; }
+  .mini-bar { width: 60px; height: 3px; background: var(--border2); border-radius: 2px; overflow: hidden; }
+  .mini-bar-fill { height: 100%; background: var(--teal); border-radius: 2px; width: 0%; transition: width 0.4s ease; }
+  .recurso-done-btn { display: inline-flex; align-items: center; gap: 7px; padding: 7px 16px; background: transparent; border: 1px solid var(--border2); border-radius: 100px; color: var(--muted); font-family: 'DM Sans', sans-serif; font-size: 12px; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+  .recurso-done-btn:hover { border-color: var(--teal); color: var(--teal); }
+  .recurso-done-btn.r-done { background: rgba(52,211,153,0.1); border-color: rgba(52,211,153,0.4); color: var(--teal); }
+  .r-check { width: 16px; height: 16px; border-radius: 50%; border: 1.5px solid currentColor; display: flex; align-items: center; justify-content: center; font-size: 8px; flex-shrink: 0; transition: all 0.2s; }
+  .recurso-done-btn.r-done .r-check { background: var(--teal); border-color: var(--teal); color: #000; }
+
+  .recurso-card.r-done { border-color: rgba(52,211,153,0.3); }
+  .recurso-card.r-done .recurso-type-icon::after { content: '✓'; position: absolute; top: -5px; right: -5px; width: 15px; height: 15px; background: var(--teal); color: #000; border-radius: 50%; font-size: 8px; font-weight: 800; display: flex; align-items: center; justify-content: center; }
+
+  .complete-row { display: flex; justify-content: flex-end; padding-top: 16px; border-top: 1px solid var(--border); }
+  .complete-btn { display: flex; align-items: center; gap: 8px; padding: 12px 24px; background: transparent; border: 1px solid var(--border2); border-radius: 100px; color: var(--muted); font-family: 'DM Sans', sans-serif; font-size: 13px; cursor: pointer; transition: all 0.2s; }
+  .complete-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .complete-btn.done { background: rgba(167,139,250,0.1); border-color: var(--accent); color: var(--accent); }
+  .check-circle { width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid currentColor; display: flex; align-items: center; justify-content: center; font-size: 10px; }
+
+  .reset-btn { display: flex; align-items: center; gap: 6px; padding: 7px 14px; background: transparent; border: 1px solid var(--border); border-radius: 100px; color: var(--muted); font-family: 'DM Sans', sans-serif; font-size: 11px; cursor: pointer; transition: all 0.2s; margin-top: 12px; }
+  .reset-btn:hover { border-color: rgba(239,68,68,0.4); color: rgba(239,68,68,0.6); }
+
+  .toast { position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--bg3); border: 1px solid var(--border2); border-radius: 100px; padding: 10px 20px; font-size: 13px; color: var(--text); display: flex; align-items: center; gap: 8px; transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1); z-index: 999; pointer-events: none; white-space: nowrap; }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+  .toast-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--teal); }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">
+    <div class="logo-pill">
+      <div class="logo-dot">
+        <svg viewBox="0 0 12 12" fill="none"><rect width="5" height="5" rx="1" fill="#0d0f12"/><rect x="7" width="5" height="5" rx="1" fill="#0d0f12"/><rect y="7" width="5" height="5" rx="1" fill="#0d0f12"/><rect x="7" y="7" width="5" height="5" rx="1" fill="#0d0f12"/></svg>
+      </div>
+      <span class="logo-text">LUCE IT</span>
+    </div>
+    <div class="divider-dot"></div>
+    <span class="year-badge">2026 · Itinerario IA</span>
+  </div>
+  <h1>Plan de formación<br><em>IA & Negocio</em><br>para Nacho</h1>
+  <p class="hero-sub">Itinerario personalizado para dominar la inteligencia artificial aplicada al negocio, las ventas y la tecnología en 2026. Cuatro módulos progresivos desde los fundamentos hasta la estrategia ejecutiva.</p>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-val">4</div><div class="stat-label">Módulos</div></div>
+    <div class="stat"><div class="stat-val">9</div><div class="stat-label">Recursos</div></div>
+    <div class="stat"><div class="stat-val">10 sem.</div><div class="stat-label">Duración</div></div>
+    <div class="stat"><div class="stat-val">8</div><div class="stat-label">Gratuitos</div></div>
+  </div>
+</div>
+
+<!-- PROGRESS -->
+<div class="progress-section">
+  <span class="progress-label">Progreso del plan</span>
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  <span class="progress-pct" id="progressPct">0%</span>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <p class="sidebar-title">Módulos del plan</p>
+    <ul class="mod-nav">
+
+      <li class="mod-nav-item">
+        <button class="mod-nav-btn active" onclick="showModule(0)" style="color: var(--mod1);">
+          <div class="nav-num" style="color: var(--mod1);">01</div>
+          <div class="nav-info">
+            <div class="nav-title">Fundamentos de IA para directivos</div>
+            <div class="nav-weeks">Semanas 1–2 · ~15h</div>
+            <div class="nav-progress"><div class="nav-mini-bar"><div class="nav-mini-fill" id="nav-fill0"></div></div><span class="nav-mini-pct" id="nav-pct0">0%</span></div>
+          </div>
+          <div class="nav-check" id="check0"></div>
+        </button>
+      </li>
+
+      <li class="mod-nav-item">
+        <button class="mod-nav-btn" onclick="showModule(1)" style="color: var(--mod2);">
+          <div class="nav-num" style="color: var(--mod2);">02</div>
+          <div class="nav-info">
+            <div class="nav-title">IA aplicada al negocio tech</div>
+            <div class="nav-weeks">Semanas 3–5 · Lectura + formación</div>
+            <div class="nav-progress"><div class="nav-mini-bar"><div class="nav-mini-fill" id="nav-fill1"></div></div><span class="nav-mini-pct" id="nav-pct1">0%</span></div>
+          </div>
+          <div class="nav-check" id="check1"></div>
+        </button>
+      </li>
+
+      <li class="mod-nav-item">
+        <button class="mod-nav-btn" onclick="showModule(2)" style="color: var(--mod3);">
+          <div class="nav-num" style="color: var(--mod3);">03</div>
+          <div class="nav-info">
+            <div class="nav-title">IA para ventas y negocio</div>
+            <div class="nav-weeks">Semanas 6–8 · Práctico-comercial</div>
+            <div class="nav-progress"><div class="nav-mini-bar"><div class="nav-mini-fill" id="nav-fill2"></div></div><span class="nav-mini-pct" id="nav-pct2">0%</span></div>
+          </div>
+          <div class="nav-check" id="check2"></div>
+        </button>
+      </li>
+
+      <li class="mod-nav-item">
+        <button class="mod-nav-btn" onclick="showModule(3)" style="color: var(--mod4);">
+          <div class="nav-num" style="color: var(--mod4);">04</div>
+          <div class="nav-info">
+            <div class="nav-title">Estrategia avanzada para directivos</div>
+            <div class="nav-weeks">Semanas 9–10 · Nivel avanzado</div>
+            <div class="nav-progress"><div class="nav-mini-bar"><div class="nav-mini-fill" id="nav-fill3"></div></div><span class="nav-mini-pct" id="nav-pct3">0%</span></div>
+          </div>
+          <div class="nav-check" id="check3"></div>
+        </button>
+      </li>
+
+    </ul>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-note">
+      <p>8 recursos gratuitos + 1 de pago. Itinerario progresivo de 10 semanas.</p>
+      <button class="reset-btn" onclick="resetProgress()">
+        <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+        Reiniciar progreso
+      </button>
+    </div>
+  </aside>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- ══ MÓDULO 1 ══ -->
+    <section class="module-panel active" id="panel0">
+      <div class="module-header">
+        <div class="module-icon" style="background: rgba(79,163,247,0.1); color: var(--mod1);">🧠</div>
+        <div class="module-header-text">
+          <div class="module-eyebrow" style="color: var(--mod1);">Módulo 01 · Semanas 1–2</div>
+          <h2 class="module-title">Fundamentos de IA<br>para directivos</h2>
+          <p class="module-desc">Antes de aplicar la IA al negocio, necesitas entender qué es realmente, qué puede hacer y qué no, y cómo hablar de ella con propiedad ante clientes y equipo.</p>
+          <div class="module-meta-pills">
+            <span class="pill">Sin conocimientos previos</span>
+            <span class="pill">3 recursos</span>
+            <span class="pill">~15 horas</span>
+            <span class="pill">Gratuito</span>
+          </div>
+        </div>
+      </div>
+      <div class="tiempo-box">
+        <span class="tiempo-icon">🕐</span>
+        <div class="tiempo-text"><strong>Tiempo estimado: ~15 horas</strong><br>AI for Everyone (~7h) + Generative AI for Everyone (~5h) + informe McKinsey (~3h). A tu ritmo, sin fecha límite.</div>
+      </div>
+      <p class="section-label">Objetivos del módulo</p>
+      <div class="obj-grid">
+        <div class="obj-card"><div class="obj-dot" style="background: var(--mod1);"></div><span class="obj-text">Entender qué es la IA y qué puede (y no puede) hacer en el contexto empresarial</span></div>
+        <div class="obj-card"><div class="obj-dot" style="background: var(--mod1);"></div><span class="obj-text">Dominar el vocabulario clave: LLMs, IA generativa, automatización, agentes</span></div>
+        <div class="obj-card"><div class="obj-dot" style="background: var(--mod1);"></div><span class="obj-text">Identificar oportunidades de aplicación de IA en el sector tech y ventas B2B</span></div>
+      </div>
+      <p class="section-label">Recursos del módulo</p>
+      <div class="recursos-grid">
+
+        <div class="recurso-card">
+          <div class="recurso-top">
+            <div class="recurso-type-icon">🎓</div>
+            <div class="recurso-body">
+              <div class="recurso-title-row">
+                <span class="recurso-name">AI for Everyone — DeepLearning.AI (Andrew Ng)</span>
+                <span class="tag tag-free">Gratuito</span>
+              </div>
+              <p class="recurso-short">Curso no técnico diseñado para directivos y profesionales de negocio. ~7 horas, autoformación a tu ritmo. El mejor punto de partida para entender qué es realmente la IA, qué puede y no puede hacer, y cómo construir una estrategia sin conocimientos técnicos.</p>
+              <div class="recurso-link-row">
+                <svg class="ext-icon" viewBox="0 0 16 16" fill="none"><path d="M6 3H3a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-3M9 2h5m0 0v5m0-5L8 9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <a class="recurso-link" href="https://www.deeplearning.ai/courses/ai-for-everyone/" target="_blank">deeplearning.ai/courses/ai-for-everyone</a>
+              </div>
+            </div>
+          </div>
+          <div class="recurso-nota-box">
+            <span class="nota-icon">💡</span>
+            <p class="nota-text">Andrew Ng es uno de los mayores expertos del mundo en IA. Este curso es el punto de partida que más se recomienda globalmente para perfiles directivos no técnicos: aprenderás a distinguir hype de realidad y a hablar de IA con propiedad ante cualquier cliente o equipo.</p>
+          </div>
+          <div class="recurso-done-row">
+            <div class="mod-progress-mini"><div class="mini-bar"><div class="mini-bar-fill" id="minibar0"></div></div><span id="minipct0">0 / 3</span></div>
+            <button class="recurso-done-btn" id="rbtn-0-0" onclick="toggleRecurso(0,0)"><div class="r-check">✓</div> Marcar como hecho</button>
+          </div>
+        </div>
+
+        <div class="recurso-card">
+          <div class="recurso-top">
+            <div class="recurso-type-icon">🎓</div>
+            <div class="recurso-body">
+              <div class="recurso-title-row">
+                <span class="recurso-name">Generative AI for Everyone — DeepLearning.AI</span>
+                <span class="tag tag-free">Gratuito</span>
+              </div>
+              <p class="recurso-short">Cómo funciona la IA generativa, sus usos prácticos en el trabajo diario y su impacto en negocios. Enfocado en ChatGPT, Copilot, etc.: cómo usarla en el día a día comercial y de gestión, y cómo explicársela a clientes con seguridad.</p>
+              <div class="recurso-link-row">
+                <svg class="ext-icon" viewBox="0 0 16 16" fill="none"><path d="M6 3H3a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-3M9 2h5m0 0v5m0-5L8 9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <a class="recurso-link" href="https://www.deeplearning.ai/courses/generative-ai-for-everyone" target="_blank">deeplearning.ai/courses/generative-ai-for-everyone</a>
+              </div>
+            </div>
+          </div>
+          <div class="recurso-nota-box">
+            <span class="nota-icon">💡</span>
+            <p class="nota-text">Complemento imprescindible al curso anterior: mientras AI for Everyone da la visión general, este profundiza en la IA generativa que está cambiando el trabajo diario. Después de este módulo podrás explicar a cualquier cliente la diferencia entre IA tradicional y generativa con ejemplos concretos.</p>
+          </div>
+          <div class="recurso-done-row">
+            <span></span>
+            <button class="recurso-done-btn" id="rbtn-0-1" onclick="toggleRecurso(0,1)"><div class="r-check">✓</div> Marcar como hecho</button>
+          </div>
+        </div>
+
+        <div class="recurso-card">
+          <div class="recurso-top">
+            <div class="recurso-type-icon">📊</div>
+            <div class="recurso-body">
+              <div class="recurso-title-row">
+                <span class="recurso-name">The State of AI — McKinsey QuantumBlack</span>
+                <span class="tag tag-free">Gratuito</span>
+                <span class="tag tag-official">Informe oficial</span>
+              </div>
+              <p class="recurso-short">Informe anual de referencia sobre adopción de IA en empresas globales. Datos y benchmarks actualizados sobre cómo están adoptando la IA las empresas líderes en todos los sectores.</p>
+              <div class="recurso-link-row">
+                <svg class="ext-icon" viewBox="0 0 16 16" fill="none"><path d="M6 3H3a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-3M9 2h5m0 0v5m0-5L8 9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <a class="recurso-link" href="https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai" target="_blank">mckinsey.com – The State of AI</a>
+              </div>
+            </div>
+          </div>
+          <div class="recurso-nota-box">
+            <span class="nota-icon">💡</span>
+            <p class="nota-text">Los datos de McKinsey sobre adopción de IA son los más citados en conversaciones ejecutivas. Conocer este informe te permite usar benchmarks de primer nivel directamente en propuestas comerciales y conversaciones con clientes: "según McKinsey, las empresas que adoptan IA en operaciones reducen costes un X%..."</p>
+          </div>
+          <div class="recurso-done-row">
+            <span></span>
+            <button class="recurso-done-btn" id="rbtn-0-2" onclick="toggleRecurso(0,2)"><div class="r-check">✓</div> Marcar como hecho</button>
+          </div>
+        </div>
+
+      </div>
+      <div class="complete-row">
+        <button class="complete-btn" id="btn0" onclick="toggleDone(0)"><div class="check-circle">✓</div> Marcar módulo como completado</button>
+      </div>
+    </section>
+
+    <!-- ══ MÓDULO 2 ══ -->
+    <section class="module-panel" id="panel1">
+      <div class="module-header">
+        <div class="module-icon" style="background: rgba(52,211,153,0.1); color: var(--mod2);">🌐</div>
+        <div class="module-header-text">
+          <div class="module-eyebrow" style="color: var(--mod2);">Módulo 02 · Semanas 3–5</div>
+          <h2 class="module-title">IA aplicada al negocio<br>y la tecnología en 2026</h2>
+          <p class="module-desc">Ahora que tienes la base, es momento de entender cómo la IA está transformando específicamente el sector tecnológico y qué significa para LUCE IT y su propuesta de valor.</p>
+          <div class="module-meta-pills">
+            <span class="pill">Enfoque sectorial</span>
+            <span class="pill">3 recursos</span>
+            <span class="pill">Lectura + formación</span>
+            <span class="pill">Gratuito</span>
+          </div>
+        </div>
+      </div>
+      <div class="tiempo-box">
+        <span class="tiempo-icon">🕐</span>
+        <div class="tiempo-text"><strong>Tiempo estimado: ~6 horas</strong><br>HBR (~2–3 artículos/semana) + publicaciones AMETIC (~2h) + Google Cloud Training (~2h). A tu ritmo.</div>
+      </div>
+      <p class="section-label">Objetivos del módulo</p>
+      <div class="obj-grid">
+        <div class="obj-card"><div class="obj-dot" style="background: var(--mod2);"></div><span class="obj-text">Comprender cómo la IA está transformando el sector tecnológico en 2026</span></div>
+        <div class="obj-card"><div class="obj-dot" style="background: var(--mod2);"></div><span class="obj-text">Analizar tendencias y casos de uso reales en empresas del sector tech</span></div>
+        <div class="obj-card"><div class="obj-dot" style="background: var(--mod2);"></div><span class="obj-text">Conectar estas tendencias con el posicionamiento y propuesta de valor de LUCE IT</span></div>
+      </div>
+      <p class="section-label">Recursos del módulo</p>
+      <div class="recursos-grid">
+
+        <div class="recurso-card">
+          <div class="recurso-top">
+            <div class="recurso-type-icon">📰</div>
+            <div class="recurso-body">
+              <div class="recurso-title-row">
+                <span class="recurso-name">HBR — AI and Machine Learning</span>
+                <span class="tag tag-free">Gratuito</span>
+              </div>
+              <p class="recurso-short">Artículos de Harvard Business Review sobre IA aplicada a estrategia, liderazgo y negocios. Actualizado constantemente con los casos y debates más relevantes del momento.</p>
+              <div class="recurso-link-row">
+                <svg class="ext-icon" viewBox="0 0 16 16" fill="none"><path d="M6 3H3a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-3M9 2h5m0 0v5m0-5L8 9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <a class="recurso-link" href="https://hbr.org/topic/subject/ai-and-machine-learning" target="_blank">hbr.org – AI and Machine Learning</a>
+              </div>
+            </div>
+          </div>
+          <div class="recurso-nota-box">
+            <span class="nota-icon">💡</span>
+            <p class="nota-text">Lee 2–3 artículos por semana: conectan la IA con decisiones reales de liderazgo, estrategia, ventas y transformación organizativa. Son exactamente el tipo de contenido que elevan una conversación comercial de "hablemos de herramientas" a "hablemos de estrategia de negocio".</p>
+          </div>
+          <div class="recurso-done-row">
+            <div class="mod-progress-mini"><div class="mini-bar"><div class="mini-bar-fill" id="minibar1"></div></div><span id="minipct1">0 / 3</span></div>
+            <button class="recurso-done-btn" id="rbtn-1-0" onclick="toggleRecurso(1,0)"><div class="r-check">✓</div> Marcar como hecho</button>
+          </div>
+        </div>
+
+        <div class="recurso-card">
+          <div class="recurso-top">
+            <div class="recurso-type-icon">📚</div>
+            <div class="recurso-body">
+              <div class="recurso-title-row">
+                <span class="recurso-name">AMETIC — Publicaciones sector tecnológico España</span>
+                <span class="tag tag-free">Gratuito</span>
+              </div>
+              <p class="recurso-short">Informes y publicaciones de la patronal tecnológica española sobre transformación digital e IA en el mercado local. Datos de adopción y tendencias del sector tech en España.</p>
+              <div class="recurso-link-row">
+                <svg class="ext-icon" viewBox="0 0 16 16" fill="none"><path d="M6 3H3a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-3M9 2h5m0 0v5m0-5L8 9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <a class="recurso-link" href="https://ametic.es/comunicacion/publicaciones/" target="_blank">ametic.es – Publicaciones</a>
+              </div>
+            </div>
+          </div>
+          <div class="recurso-nota-box">
+            <span class="nota-icon">💡</span>
+            <p class="nota-text">Fundamental para contextualizar la IA en el mercado español donde opera LUCE IT: datos de adopción, tendencias y retos del sector tech local. Usar datos de AMETIC en conversaciones con clientes españoles transmite conocimiento del mercado local que los diferencia de competidores globales.</p>
+          </div>
+          <div class="recurso-done-row">
+            <span></span>
+            <button class="recurso-done-btn" id="rbtn-1-1" onclick="toggleRecurso(1,1)"><div class="r-check">✓</div> Marcar como hecho</button>
+          </div>
+        </div>
+
+        <div class="recurso-card">
+          <div class="recurso-top">
+            <div class="recurso-type-icon">☁️</div>
+            <div class="recurso-body">
+              <div class="recurso-title-row">
+                <span class="recurso-name">Google Cloud — Business Training</span>
+                <span class="tag tag-free">Gratuito</span>
+              </div>
+              <p class="recurso-short">Formación en IA y cloud orientada a profesionales de negocio. Incluye módulos de IA generativa para empresas y casos prácticos de aplicación en operaciones y estrategia.</p>
+              <div class="recurso-link-row">
+                <svg class="ext-icon" viewBox="0 0 16 16" fill="none"><path d="M6 3H3a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-3M9 2h5m0 0v5m0-5L8 9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <a class="recurso-link" href="https://cloud.google.com/learn/training/business" target="_blank">cloud.google.com/learn/training/business</a>
+              </div>
+            </div>
+          </div>
+          <div class="recurso-nota-box">
+            <span class="nota-icon">💡</span>
+            <p class="nota-text">Muy útil para hablar con más propiedad sobre tecnología cloud e IA en conversaciones comerciales con clientes técnicos. Después de este módulo podrás mantener una conversación fluida con un CTO o arquitecto de soluciones sin perderte en los términos técnicos.</p>
+          </div>
+          <div class="recurso-done-row">
+            <span></span>
+            <button class="recurso-done-btn" id="rbtn-1-2" onclick="toggleRecurso(1,2)"><div class="r-check">✓</div> Marcar como hecho</button>
+          </div>
+        </div>
+
+      </div>
+      <div class="complete-row">
+        <button class="complete-btn" id="btn1" onclick="toggleDone(1)"><div class="check-circle">✓</div> Marcar módulo como completado</button>
+      </div>
+    </section>
+
+    <!-- ══ MÓDULO 3 ══ -->
+    <section class="module-panel" id="panel2">
+      <div class="module-header">
+        <div class="module-icon" style="background: rgba(245,158,11,0.1); color: var(--mod3);">📈</div>
+        <div class="module-header-text">
+          <div class="module-eyebrow" style="color: var(--mod3);">Módulo 03 · Semanas 6–8</div>
+          <h2 class="module-title">IA para ventas<br>y desarrollo de negocio</h2>
+          <p class="module-desc">El módulo más orientado a tu rol. Aprenderás a usar la IA para vender más, prospectar mejor y posicionarte como experto ante tus clientes.</p>
+          <div class="module-meta-pills">
+            <span class="pill">Aplicación directa</span>
+            <span class="pill">2 recursos</span>
+            <span class="pill">Enfoque práctico-comercial</span>
+            <span class="pill">Gratuito</span>
+          </div>
+        </div>
+      </div>
+      <div class="tiempo-box">
+        <span class="tiempo-icon">🕐</span>
+        <div class="tiempo-text"><strong>Tiempo estimado: ~5 horas</strong><br>Salesforce AI Sales Training (~2–3h) + Salesforce Generative AI en español (~2h). A tu ritmo.</div>
+      </div>
+      <p class="section-label">Objetivos del módulo</p>
+      <div class="obj-grid">
+        <div class="obj-card"><div class="obj-dot" style="background: var(--mod3);"></div><span class="obj-text">Aplicar IA en el proceso comercial: prospección, propuestas, seguimiento y cierre</span></div>
+        <div class="obj-card"><div class="obj-dot" style="background: var(--mod3);"></div><span class="obj-text">Usar herramientas de IA para aumentar la productividad en ventas B2B</span></div>
+        <div class="obj-card"><div class="obj-dot" style="background: var(--mod3);"></div><span class="obj-text">Construir argumentarios comerciales sobre IA para clientes de LUCE IT</span></div>
+      </div>
+      <p class="section-label">Recursos del módulo</p>
+      <div class="recursos-grid">
+
+        <div class="recurso-card">
+          <div class="recurso-top">
+            <div class="recurso-type-icon">🎓</div>
+            <div class="recurso-body">
+              <div class="recurso-title-row">
+                <span class="recurso-name">Salesforce — AI Sales Training (Trailhead)</span>
+                <span class="tag tag-free">Gratuito</span>
+              </div>
+              <p class="recurso-short">Cursos sobre IA aplicada a ventas: automatización, CRM inteligente y estrategias comerciales. Técnicas concretas para prospectar, gestionar el pipeline y cerrar más oportunidades apoyándote en herramientas inteligentes.</p>
+              <div class="recurso-link-row">
+                <svg class="ext-icon" viewBox="0 0 16 16" fill="none"><path d="M6 3H3a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-3M9 2h5m0 0v5m0-5L8 9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <a class="recurso-link" href="https://www.salesforce.com/sales/ai/ai-sales-training-courses/" target="_blank">salesforce.com – AI Sales Training</a>
+              </div>
+            </div>
+          </div>
+          <div class="recurso-nota-box">
+            <span class="nota-icon">💡</span>
+            <p class="nota-text">Sin registro necesario. Aprenderás técnicas concretas que puedes trasladar directamente a tu día a día: cómo usar IA para priorizar leads, personalizar propuestas a escala y hacer seguimiento automatizado sin perder el toque humano que cierra los grandes contratos.</p>
+          </div>
+          <div class="recurso-done-row">
+            <div class="mod-progress-mini"><div class="mini-bar"><div class="mini-bar-fill" id="minibar2"></div></div><span id="minipct2">0 / 2</span></div>
+            <button class="recurso-done-btn" id="rbtn-2-0" onclick="toggleRecurso(2,0)"><div class="r-check">✓</div> Marcar como hecho</button>
+          </div>
+        </div>
+
+        <div class="recurso-card">
+          <div class="recurso-top">
+            <div class="recurso-type-icon">🎓</div>
+            <div class="recurso-body">
+              <div class="recurso-title-row">
+                <span class="recurso-name">Salesforce — Generative AI Course (en español)</span>
+                <span class="tag tag-free">Gratuito</span>
+                <span class="tag tag-reg">Requiere registro</span>
+              </div>
+              <p class="recurso-short">Curso completo en castellano sobre IA generativa aplicada al trabajo y los negocios, dividido en módulos progresivos. 100% en español, muy práctico. Solo hay que crear una cuenta gratuita en Salesforce Trailhead.</p>
+              <div class="recurso-link-row">
+                <svg class="ext-icon" viewBox="0 0 16 16" fill="none"><path d="M6 3H3a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-3M9 2h5m0 0v5m0-5L8 9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <a class="recurso-link" href="https://www.salesforce.com/es/agentforce/generative-ai-course/" target="_blank">salesforce.com/es – Generative AI Course</a>
+              </div>
+            </div>
+          </div>
+          <div class="recurso-nota-box">
+            <span class="nota-icon">💡</span>
+            <p class="nota-text">Ideal para entender cómo usar la IA generativa en tu trabajo comercial diario, todo en español. El registro es gratuito y el certificado que obtienes al completarlo es un activo real para tu perfil de LinkedIn y para posicionarte como referente en IA ante clientes y equipo.</p>
+          </div>
+          <div class="recurso-done-row">
+            <span></span>
+            <button class="recurso-done-btn" id="rbtn-2-1" onclick="toggleRecurso(2,1)"><div class="r-check">✓</div> Marcar como hecho</button>
+          </div>
+        </div>
+
+      </div>
+      <div class="complete-row">
+        <button class="complete-btn" id="btn2" onclick="toggleDone(2)"><div class="check-circle">✓</div> Marcar módulo como completado</button>
+      </div>
+    </section>
+
+    <!-- ══ MÓDULO 4 ══ -->
+    <section class="module-panel" id="panel3">
+      <div class="module-header">
+        <div class="module-icon" style="background: rgba(167,139,250,0.1); color: var(--mod4);">🏆</div>
+        <div class="module-header-text">
+          <div class="module-eyebrow" style="color: var(--mod4);">Módulo 04 · Semanas 9–10</div>
+          <h2 class="module-title">Estrategia avanzada<br>de IA para directivos</h2>
+          <p class="module-desc">El módulo de cierre. Consolidarás todo lo aprendido y lo elevarás a un nivel de visión estratégica ejecutiva, con certificación incluida para reforzar tu posicionamiento como referente.</p>
+          <div class="module-meta-pills">
+            <span class="pill">Nivel avanzado</span>
+            <span class="pill">2 recursos</span>
+            <span class="pill">Certificación</span>
+          </div>
+        </div>
+      </div>
+      <div class="tiempo-box">
+        <span class="tiempo-icon">🕐</span>
+        <div class="tiempo-text"><strong>Tiempo estimado: variable</strong><br>Programa IEBS (intensidad según edición) + Great Learning Academy (a tu ritmo). Consulta fechas en IEBS.</div>
+      </div>
+      <p class="section-label">Objetivos del módulo</p>
+      <div class="obj-grid">
+        <div class="obj-card"><div class="obj-dot" style="background: var(--mod4);"></div><span class="obj-text">Diseñar una estrategia de IA aplicada específicamente a LUCE IT</span></div>
+        <div class="obj-card"><div class="obj-dot" style="background: var(--mod4);"></div><span class="obj-text">Posicionarte como referente en IA frente a clientes, equipo y competencia</span></div>
+        <div class="obj-card"><div class="obj-dot" style="background: var(--mod4);"></div><span class="obj-text">Obtener una certificación ejecutiva reconocida que refuerce tu perfil profesional</span></div>
+      </div>
+      <p class="section-label">Recursos del módulo</p>
+      <div class="recursos-grid">
+
+        <div class="recurso-card">
+          <div class="recurso-top">
+            <div class="recurso-type-icon">🏆</div>
+            <div class="recurso-body">
+              <div class="recurso-title-row">
+                <span class="recurso-name">IEBS — Programa Estrategias IA para Directivos</span>
+                <span class="tag tag-paid">De pago</span>
+              </div>
+              <p class="recurso-short">Programa ejecutivo especializado en estrategia de IA para perfiles directivos. Certificación reconocida en el mercado. Pensado para dar una visión estratégica de negocio: cómo diseñar e implantar una estrategia de IA en una consultora tecnológica.</p>
+              <div class="recurso-link-row">
+                <svg class="ext-icon" viewBox="0 0 16 16" fill="none"><path d="M6 3H3a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-3M9 2h5m0 0v5m0-5L8 9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <a class="recurso-link" href="https://www.iebschool.com/programas/programa-estrategias-ia-directivos/" target="_blank">iebschool.com – Estrategias IA Directivos</a>
+              </div>
+            </div>
+          </div>
+          <div class="recurso-nota-box">
+            <span class="nota-icon">💡</span>
+            <p class="nota-text">El recurso más avanzado del plan y el que más te diferenciará como directivo. La certificación IEBS es reconocida en el mercado español y reforzará tu perfil en LinkedIn de forma notable. Después de los tres módulos anteriores llegarás a este programa con una base sólida que te permitirá aprovechar al máximo el contenido.</p>
+          </div>
+          <div class="recurso-done-row">
+            <div class="mod-progress-mini"><div class="mini-bar"><div class="mini-bar-fill" id="minibar3"></div></div><span id="minipct3">0 / 2</span></div>
+            <button class="recurso-done-btn" id="rbtn-3-0" onclick="toggleRecurso(3,0)"><div class="r-check">✓</div> Marcar como hecho</button>
+          </div>
+        </div>
+
+        <div class="recurso-card">
+          <div class="recurso-top">
+            <div class="recurso-type-icon">🎓</div>
+            <div class="recurso-body">
+              <div class="recurso-title-row">
+                <span class="recurso-name">Great Learning Academy — AI for Business Courses</span>
+                <span class="tag tag-free">Gratuito</span>
+              </div>
+              <p class="recurso-short">Cursos gratuitos con certificado sobre IA aplicada al negocio: customer journey, productividad y toma de decisiones. Complemento gratuito al programa IEBS para reforzar conceptos a tu ritmo.</p>
+              <div class="recurso-link-row">
+                <svg class="ext-icon" viewBox="0 0 16 16" fill="none"><path d="M6 3H3a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-3M9 2h5m0 0v5m0-5L8 9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <a class="recurso-link" href="https://www.mygreatlearning.com/ai/free-courses" target="_blank">mygreatlearning.com – AI Free Courses</a>
+              </div>
+            </div>
+          </div>
+          <div class="recurso-nota-box">
+            <span class="nota-icon">💡</span>
+            <p class="nota-text">Permite reforzar conceptos de IA para negocios a tu ritmo, con certificados descargables que puedes añadir directamente a tu perfil de LinkedIn. Úsalo como complemento al programa IEBS: mientras el programa da visión estratégica, Great Learning ofrece módulos cortos y prácticos para consolidar cada área.</p>
+          </div>
+          <div class="recurso-done-row">
+            <span></span>
+            <button class="recurso-done-btn" id="rbtn-3-1" onclick="toggleRecurso(3,1)"><div class="r-check">✓</div> Marcar como hecho</button>
+          </div>
+        </div>
+
+      </div>
+      <div class="complete-row">
+        <button class="complete-btn" id="btn3" onclick="toggleDone(3)"><div class="check-circle">✓</div> Marcar módulo como completado</button>
+      </div>
+    </section>
+
+  </div><!-- /content -->
+</div><!-- /main -->
+
+<div class="toast" id="toast"><div class="toast-dot"></div><span id="toast-msg">Progreso guardado</span></div>
+
+<script>
+  const STORAGE_KEY = 'luceit_nacho_ia_v2';
+
+  const MODULES = [
+    { total: 3, ids: ['rbtn-0-0','rbtn-0-1','rbtn-0-2'] },
+    { total: 3, ids: ['rbtn-1-0','rbtn-1-1','rbtn-1-2'] },
+    { total: 2, ids: ['rbtn-2-0','rbtn-2-1'] },
+    { total: 2, ids: ['rbtn-3-0','rbtn-3-1'] }
+  ];
+
+  let state = {
+    recursos: [[false,false,false],[false,false,false],[false,false],[false,false]],
+    modules:  [false,false,false,false]
+  };
+
+  function loadState() {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) { const p = JSON.parse(saved); if (p.recursos && p.modules) state = p; }
+    } catch(e) {}
+  }
+
+  function saveState() {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e) {}
+  }
+
+  function applyState() {
+    MODULES.forEach((mod, mi) => {
+      mod.ids.forEach((id, ri) => {
+        const btn  = document.getElementById(id);
+        const card = btn ? btn.closest('.recurso-card') : null;
+        const isDone = state.recursos[mi][ri];
+        if (btn) {
+          btn.classList.toggle('r-done', isDone);
+          btn.innerHTML = `<div class="r-check">✓</div> ${isDone ? 'Completado' : 'Marcar como hecho'}`;
+          btn.onclick = () => toggleRecurso(mi, ri);
+        }
+        if (card) card.classList.toggle('r-done', isDone);
+      });
+      const modDone = state.modules[mi];
+      const mBtn  = document.getElementById('btn'   + mi);
+      const check = document.getElementById('check' + mi);
+      if (mBtn) { mBtn.classList.toggle('done', modDone); mBtn.innerHTML = `<div class="check-circle">✓</div> ${modDone ? 'Módulo completado' : 'Marcar módulo como completado'}`; }
+      if (check) check.classList.toggle('done', modDone);
+      updateModuleProgress(mi);
+    });
+    updateGlobalProgress();
+  }
+
+  function toggleRecurso(mi, ri) {
+    state.recursos[mi][ri] = !state.recursos[mi][ri];
+    const id   = MODULES[mi].ids[ri];
+    const btn  = document.getElementById(id);
+    const card = btn ? btn.closest('.recurso-card') : null;
+    const isDone = state.recursos[mi][ri];
+    if (btn) { btn.classList.toggle('r-done', isDone); btn.innerHTML = `<div class="r-check">✓</div> ${isDone ? 'Completado' : 'Marcar como hecho'}`; btn.onclick = () => toggleRecurso(mi, ri); }
+    if (card) card.classList.toggle('r-done', isDone);
+    const allDone = state.recursos[mi].every(Boolean);
+    if (allDone && !state.modules[mi]) {
+      state.modules[mi] = true;
+      const mBtn  = document.getElementById('btn'   + mi);
+      const check = document.getElementById('check' + mi);
+      if (mBtn)  { mBtn.classList.add('done'); mBtn.innerHTML = '<div class="check-circle">✓</div> Módulo completado'; }
+      if (check) check.classList.add('done');
+      showToast('🎉 ¡Módulo completado!');
+    } else { showToast(isDone ? '✓ Recurso marcado como hecho' : 'Recurso desmarcado'); }
+    updateModuleProgress(mi);
+    updateGlobalProgress();
+    saveState();
+  }
+
+  function toggleDone(mi) {
+    state.modules[mi] = !state.modules[mi];
+    const btn   = document.getElementById('btn'   + mi);
+    const check = document.getElementById('check' + mi);
+    const isDone = state.modules[mi];
+    if (btn) { btn.classList.toggle('done', isDone); btn.innerHTML = `<div class="check-circle">✓</div> ${isDone ? 'Módulo completado' : 'Marcar módulo como completado'}`; }
+    if (check) check.classList.toggle('done', isDone);
+    showToast(isDone ? '✓ Módulo marcado como completado' : 'Módulo desmarcado');
+    updateGlobalProgress();
+    saveState();
+  }
+
+  function updateModuleProgress(mi) {
+    const total = MODULES[mi].total;
+    const done  = state.recursos[mi].filter(Boolean).length;
+    const pct   = total > 0 ? Math.round((done / total) * 100) : 0;
+    const minibar = document.getElementById('minibar' + mi);
+    const minipct = document.getElementById('minipct' + mi);
+    if (minibar) minibar.style.width = pct + '%';
+    if (minipct) minipct.textContent = done + ' / ' + total;
+    const navFill = document.getElementById('nav-fill' + mi);
+    const navPct  = document.getElementById('nav-pct'  + mi);
+    if (navFill) navFill.style.width = pct + '%';
+    if (navPct)  navPct.textContent  = pct + '%';
+  }
+
+  function updateGlobalProgress() {
+    const totalR = MODULES.reduce((a, m) => a + m.total, 0);
+    const doneR  = state.recursos.reduce((a, m) => a + m.filter(Boolean).length, 0);
+    const pct    = Math.round((doneR / totalR) * 100);
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressPct').textContent  = pct + '%';
+  }
+
+  function showModule(idx) {
+    document.querySelectorAll('.module-panel').forEach((p, i) => p.classList.toggle('active', i === idx));
+    document.querySelectorAll('.mod-nav-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+  }
+
+  function resetProgress() {
+    if (!confirm('¿Seguro que quieres reiniciar todo el progreso?')) return;
+    state = { recursos: [[false,false,false],[false,false,false],[false,false],[false,false]], modules: [false,false,false,false] };
+    saveState(); applyState();
+    showToast('🔄 Progreso reiniciado');
+  }
+
+  let toastTimer;
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    document.getElementById('toast-msg').textContent = msg;
+    t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.remove('show'), 2400);
+  }
+
+  loadState();
+  applyState();
+</script>
+</body>
+</html>
